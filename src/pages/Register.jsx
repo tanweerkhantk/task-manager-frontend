@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import {toast} from 'react-toastify'
 
 
 const Register = () => {
@@ -13,17 +14,18 @@ const Register = () => {
   const handleRegister = async(e) => {
     e.preventDefault()
     try {
-      await axios.post("http://localhost:5000/api/auth/register", {
+      const API = import.meta.env.VITE_API_URL
+      await axios.post(`${API}/api/auth/register`, {
         name,
         email,
         password
       })
 
-      alert("Registration Successful")
+      toast.success("Account Created Successfully")
       navigate("/login")
 
     } catch (error) {
-      alert("Registration Error")
+      toast.error("Registration Error")
     }
   }
   return (
