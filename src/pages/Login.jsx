@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import {toast} from  'react-toastify'
 
 const Login = () => {
   const [email, setEmail] = useState("")
@@ -16,11 +17,12 @@ const Login = () => {
         password
       })
       localStorage.setItem("token", res.data.token)
+      toast.success("Login Successful")
       navigate("/")
     } catch (err) {
-      console.log(err.response?.data)
-      alert(err.response?.data?.message || "Login Error")
-      
+      // console.log(err.response?.data)
+      // alert(err.response?.data?.message || "Login Error")
+      toast.error("Invalid Credentials")      
     }
   }
   return (

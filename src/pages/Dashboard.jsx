@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import {toast} from 'react-toastify'
 
 const Dashboard = () => {
 
@@ -46,6 +47,7 @@ const Dashboard = () => {
         }    
       }
     )
+    toast.success("Task Created")
     setTitle("")
     setDescription("")
     fetchTasks()
@@ -64,6 +66,7 @@ const Dashboard = () => {
         }    
       }
     )
+    toast.info("Task Updated")
     setEditId(null)
     setTitle("")
     setDescription("")
@@ -79,6 +82,7 @@ const Dashboard = () => {
         }    
       }
     )
+    toast.error("Task Deleted")
     fetchTasks()
   }
 
@@ -145,7 +149,14 @@ const Dashboard = () => {
         )}
       </form>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-        {tasks.map(task => (
+        {tasks.length === 0 ? (
+          <div className='col-span-3 text-center py-10 
+          '>
+            <p className='text-gray-500 text-xl'>No Tasks Yet</p>
+            <p className='text-gray-400 text-xl'>No Tasks Available. Create your first task to get started  🚀</p>
+          </div>
+        ) : (
+          tasks.map(task => (
           <div
           key={task._id}
           className='bg-white p-4 rounded shadow flex justify-between'
@@ -165,7 +176,9 @@ const Dashboard = () => {
             >Delete</button>
           </div>
           </div>
-        ))}
+        ))
+        )}
+        
       </div>
     </div>
   )
